@@ -1,0 +1,27 @@
+<launch>
+    <arg name="objects_in" default="/objects_in" />
+    <arg name="objects_out" default="/objects_out" />
+    <arg name="tracking_frame" default="map" />
+    <arg name="double_cost_distance" default="0.5" />
+    <arg name="max_track_speed" default="3.0" />
+    <arg name="prediction_position_variance" default="0.25" />
+    <arg name="prediction_velocity_variance" default="0.25" />
+    <arg name="observation_position_variance" default="0.0001" />
+    <arg name="observation_velocity_variance" default="0.0001" />
+    <arg name="initial_position_variance" default="0.0001" />
+    <arg name="initial_velocity_variance" default="1.0" />
+
+    <node pkg="object_tracker" type="object_tracker" name="object_tracker_node" output="screen">
+        <param name="objects_in" value="$(arg objects_in)" />
+        <param name="objects_out" value="$(arg objects_out)" />
+        <param name="tracking_frame" value="$(arg tracking_frame)" />
+        <param name="double_cost_distance" value="$(arg double_cost_distance)" />
+        <param name="max_track_speed" value="$(arg max_track_speed)" />
+        <param name="prediction_position_variance" value="$(arg prediction_position_variance)" />
+        <param name="prediction_velocity_variance" value="$(arg prediction_velocity_variance)" />
+        <param name="observation_position_variance" value="$(arg observation_position_variance)" />
+        <param name="observation_velocity_variance" value="$(arg observation_velocity_variance)" />
+        <param name="initial_position_variance" value="$(arg initial_position_variance)" />
+        <param name="initial_velocity_variance" value="$(arg initial_velocity_variance)" />
+    </node>
+</launch>
