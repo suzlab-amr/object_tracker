@@ -134,11 +134,11 @@ void ObjectTracker::objects_callback(const object_msgs::ObjectArray::ConstPtr& m
     // Transform object positions to tracking frame.
     if (tracking_frame_ != object_array.header.frame_id)
     {
-        // Get transform from lidar to map.
-        geometry_msgs::TransformStamped lidar2map;
+        // Get transform from objects frame to tracking frame.
+        geometry_msgs::TransformStamped objects2tracking;
         try
         {
-            lidar2map = tf_buffer_.lookupTransform(
+            objects2tracking = tf_buffer_.lookupTransform(
                 tracking_frame_,
                 msg->header.frame_id,
                 ros::Time(0)
@@ -150,17 +150,17 @@ void ObjectTracker::objects_callback(const object_msgs::ObjectArray::ConstPtr& m
             return;
         }
 
-        // Transform object positions.
+        // Transform object positions to tracking frame.
         for (size_t i = 0; i < object_array.objects.size(); i++)
         {
-            geometry_msgs::Point lidar_point, map_point;
-            lidar_point.x = object_array.objects[i].pose.position.x;
-            lidar_point.y = object_array.objects[i].pose.position.y;
-            lidar_point.z = object_array.objects[i].pose.position.z;
-            tf2::doTransform(lidar_point, map_point, lidar2map);
-            object_array.objects[i].pose.position.x = map_point.x;
-            object_array.objects[i].pose.position.y = map_point.y;
-            object_array.objects[i].pose.position.z = map_point.z;
+            geometry_msgs::Point objects_point, tracking_point;
+            objects_point.x = object_array.objects[i].pose.position.x;
+            objects_point.y = object_array.objects[i].pose.position.y;
+            objects_point.z = object_array.objects[i].pose.position.z;
+            tf2::doTransform(objects_point, tracking_point, objects2tracking);
+            object_array.objects[i].pose.position.x = tracking_point.x;
+            object_array.objects[i].pose.position.y = tracking_point.y;
+            object_array.objects[i].pose.position.z = tracking_point.z;
         }
         object_array.header.frame_id = tracking_frame_;
     }
