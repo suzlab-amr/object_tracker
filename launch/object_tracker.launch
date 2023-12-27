@@ -11,7 +11,7 @@
     <arg name="initial_position_variance" default="0.0001" />
     <arg name="initial_velocity_variance" default="1.0" />
 
-    <node pkg="object_tracker" type="object_tracker" name="object_tracker_node" output="screen">
+    <node pkg="object_tracker" type="object_tracker_node" name="object_tracker_node" output="screen">
         <param name="objects_in" value="$(arg objects_in)" />
         <param name="objects_out" value="$(arg objects_out)" />
         <param name="tracking_frame" value="$(arg tracking_frame)" />
