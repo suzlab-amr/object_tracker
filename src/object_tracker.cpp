@@ -123,6 +123,8 @@ void ObjectTracker::objects_callback(const object_msgs::ObjectArray::ConstPtr& m
 {
     // Get time step.
     double dt = (msg->header.stamp - last_time_).toSec();
+    if (dt <= 0)
+        return;
 
     // Copy object array.
     auto object_array = *msg;
